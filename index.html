@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untukmu</title>
+<style>
+body {
+  font-family: Georgia, serif;
+  background: linear-gradient(135deg,#f9f6f2,#ffe6f0);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+.container {
+  background: #fff;
+  padding: 30px;
+  max-width: 520px;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  text-align: center;
+}
+h1 {
+  color: #c94f7c;
+  margin-bottom: 18px;
+}
+.poem {
+  text-align: left;
+  white-space: pre-line;
+  line-height: 1.7;
+  color: #333;
+  font-size: 18px;
+}
+button {
+  margin: 12px 6px;
+  padding: 10px 18px;
+  background: #c94f7c;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+.signature {
+  margin-top: 14px;
+  font-style: italic;
+  color: #666;
+}
+.heart {
+  position: fixed;
+  top: -10px;
+  font-size: 20px;
+  color: #e63963;
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Untukmu</h1>
+  
+  <div class="poem">
+Aku sudah sampai di titik
+tidak berharap apa-apa dari siapa pun.
+Bukan karena kuat,
+tapi karena capek jatuh di lubang yang sama.
+
+Aku sudah yakin
+tidak ada lagi yang bisa menggeser perhatianku,
+lalu kamu datang
+dan merusak keyakinan itu dengan cara yang tenang.
+
+Aku tidak minta janji,
+tidak juga kepastian.
+Kalau pun ini salah,
+biarlah salah yang aku pilih dengan sadar.
+
+Kalau kamu mau tinggal sebentar,
+ajari aku pelan-pelan
+bahwa percaya tidak selalu berakhir
+dengan kehilangan.
+  </div>
+
+  <button id="musicBtn">▶ Musik</button>
+  <button id="heartBtn">❤ Hati</button>
+  
+  <div class="signature">— Djati</div>
+</div>
+
+<audio id="music" loop>
+  <source src="musik.mp3" type="audio/mpeg">
+  Your browser tidak mendukung audio.
+</audio>
+
+<script>
+const music = document.getElementById("music");
+const musicBtn = document.getElementById("musicBtn");
+const heartBtn = document.getElementById("heartBtn");
+let musicPlaying = false;
+let heartInterval = null;
+
+// Musik Play / Pause
+musicBtn.onclick = () => {
+  if (!musicPlaying) {
+    music.play().catch(e => alert("Klik tombol Musik sekali lagi 🎵"));
+    musicBtn.textContent = "⏸ Musik";
+  } else {
+    music.pause();
+    musicBtn.textContent = "▶ Musik";
+  }
+  musicPlaying = !musicPlaying;
+};
+
+// Hati Start / Stop
+heartBtn.onclick = () => {
+  if (heartInterval === null) {
+    heartInterval = setInterval(() => {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.innerHTML = "❤";
+      h.style.left = Math.random()*100 + "vw";
+      h.style.animationDuration = (Math.random()*3+3) + "s";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 6000);
+    }, 500);
+    heartBtn.textContent = "✖ Hati";
+  } else {
+    clearInterval(heartInterval);
+    heartInterval = null;
+    heartBtn.textContent = "❤ Hati";
+  }
+};
+</script>
+
+</body>
+</html>
